@@ -4,17 +4,241 @@ function sendCommand(cmd)
     var req = new XMLHttpRequest();
     req.open("POST","./denon.php", true);
     req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    req.setRequestHeader("Content-Length", cmd.length); // POST request MUST have a Content-Length header (as per HTTP/1.1)
+    req.setRequestHeader("Content-Length", cmd.length);
     req.onreadystatechange = function() {
         if (req.readyState == 4)
         {
             if (req.status == 200)
             {
-//              alert(req.responseText);
+//                alert(req.responseText);
             }
         }
     }
     req.send("cmd=" + cmd);
+}
+
+function init()
+{
+    initVolumeSlider();
+}
+
+function initVolumeSlider()
+{
+    var cmd = '-cmd="MV?" -response';
+    var req = new XMLHttpRequest();
+    req.open("POST","./denon.php", true);
+    req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    req.setRequestHeader("Content-Length", cmd.length);
+    req.onreadystatechange = function() {
+        if (req.readyState == 4)
+        {
+            if (req.status == 200)
+            {
+		setVolumeSliderFromResponseText(req.responseText);
+		initPl2WidthSlider();
+            }
+        }
+    }
+    req.send("cmd=" + cmd);
+}
+
+function initPl2WidthSlider()
+{
+    var cmd = "-cmd='PSCEN ?' -response";
+    var req = new XMLHttpRequest();
+    req.open("POST","./denon.php", true);
+    req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    req.setRequestHeader("Content-Length", cmd.length);
+    req.onreadystatechange = function() {
+        if (req.readyState == 4)
+        {
+            if (req.status == 200)
+            {
+		setPl2WidthSliderFromResponseText(req.responseText);
+		initPl2DimensionSlider();
+            }
+        }
+    }
+    req.send("cmd=" + cmd);
+}
+
+function initPl2DimensionSlider()
+{
+    var cmd = "-cmd='PSDIM ?' -response";
+    var req = new XMLHttpRequest();
+    req.open("POST","./denon.php", true);
+    req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    req.setRequestHeader("Content-Length", cmd.length);
+    req.onreadystatechange = function() {
+        if (req.readyState == 4)
+        {
+            if (req.status == 200)
+            {
+		setPl2DimensionSliderFromResponseText(req.responseText);
+		initNeo6WidthSlider();
+            }
+        }
+    }
+    req.send("cmd=" + cmd);
+}
+
+function initNeo6WidthSlider()
+{
+    var cmd = "-cmd='PSCEI ?' -response";
+    var req = new XMLHttpRequest();
+    req.open("POST","./denon.php", true);
+    req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    req.setRequestHeader("Content-Length", cmd.length);
+    req.onreadystatechange = function() {
+        if (req.readyState == 4)
+        {
+            if (req.status == 200)
+            {
+		setNeo6WidthSliderFromResponseText(req.responseText);
+		initMatrixDelaySlider();
+            }
+        }
+    }
+    req.send("cmd=" + cmd);
+}
+
+function initMatrixDelaySlider()
+{
+    var cmd = "-cmd='PSDEL ?' -response";
+    var req = new XMLHttpRequest();
+    req.open("POST","./denon.php", true);
+    req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    req.setRequestHeader("Content-Length", cmd.length);
+    req.onreadystatechange = function() {
+        if (req.readyState == 4)
+        {
+            if (req.status == 200)
+            {
+		setMatrixDelaySliderFromResponseText(req.responseText);
+		initRoomSizeSlider();
+            }
+        }
+    }
+    req.send("cmd=" + cmd);
+}
+
+function initRoomSizeSlider()
+{
+    var cmd = "-cmd='PSRSZ ?' -response";
+    var req = new XMLHttpRequest();
+    req.open("POST","./denon.php", true);
+    req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    req.setRequestHeader("Content-Length", cmd.length);
+    req.onreadystatechange = function() {
+        if (req.readyState == 4)
+        {
+            if (req.status == 200)
+            {
+		setRoomSizeSliderFromResponseText(req.responseText);
+		initEffectLevelSlider();
+            }
+        }
+    }
+    req.send("cmd=" + cmd);
+}
+
+function initEffectLevelSlider()
+{
+    var cmd = "-cmd='PSEFF ?' -response";
+    var req = new XMLHttpRequest();
+    req.open("POST","./denon.php", true);
+    req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    req.setRequestHeader("Content-Length", cmd.length);
+    req.onreadystatechange = function() {
+        if (req.readyState == 4)
+        {
+            if (req.status == 200)
+            {
+		setEffectLevelSliderFromResponseText(req.responseText);
+		initPanCheckbox();
+            }
+        }
+    }
+    req.send("cmd=" + cmd);
+}
+
+function initPanCheckbox()
+{
+    var cmd = "-cmd='PSPAN ?' -response";
+    var req = new XMLHttpRequest();
+    req.open("POST","./denon.php", true);
+    req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    req.setRequestHeader("Content-Length", cmd.length);
+    req.onreadystatechange = function() {
+        if (req.readyState == 4)
+        {
+            if (req.status == 200)
+            {
+		setPanCheckboxFromResponseText(req.responseText);
+            }
+        }
+    }
+    req.send("cmd=" + cmd);
+}
+
+function setVolumeSliderFromResponseText(responseText)
+{
+    var rawVolume = responseText.substr(2);
+    var adjustedVolume = rawVolume*1 - 80;
+    document.getElementById('volumeControl').value = adjustedVolume;
+}
+
+function setPl2WidthSliderFromResponseText(responseText)
+{
+    var val = responseText.substr(6);
+    document.getElementById('pl2Width').value = val * 1;
+}
+
+function setPl2DimensionSliderFromResponseText(responseText)
+{
+    var val = responseText.substr(6);
+    document.getElementById('pl2Dimension').value = val * 1;
+}
+
+function setNeo6WidthSliderFromResponseText(responseText)
+{
+    var val = responseText.substr(6);
+    document.getElementById('neo6Width').value = val * 1;
+}
+
+function setMatrixDelaySliderFromResponseText(responseText)
+{
+    var val = responseText.substr(6);
+    document.getElementById('matrixDelay').value = val * 1;
+}
+
+function setRoomSizeSliderFromResponseText(responseText)
+{
+    var val = responseText.substr(6,2);
+    switch (val)
+    {
+	case 'N\n': n = 0; break;
+	case 'S\n': n = 1; break;
+	case 'MS' : n = 2; break;
+	case 'M\n': n = 3; break;
+	case 'ML' : n = 4; break;
+	case 'L\n': n = 5; break;
+    }
+    document.getElementById('roomSize').value = n;
+}
+
+function setEffectLevelSliderFromResponseText(responseText)
+{
+    var val = responseText.substr(6);
+    document.getElementById('effectLevel').value = val * 1;
+}
+
+function setPanCheckboxFromResponseText(responseText)
+{
+    if (responseText.startsWith("PSPAN ON"))
+	document.getElementById('pl2PanMode').checked = true;
+    else
+	document.getElementById('pl2PanMode').checked = false;	
 }
 
 function powerOn()
@@ -180,11 +404,12 @@ function roomSizeChanged()
     size = document.getElementById('roomSize');
     var s = '';
     switch (size.value) {
-	case '0': s = 'S'; break;
-	case '1': s = 'MS'; break;
-	case '2': s = 'M'; break;
-	case '3': s = 'ML'; break;
-	case '4': s = 'L'; break;
+	case '0': s = 'N'; break;
+	case '1': s = 'S'; break;
+	case '2': s = 'MS'; break;
+	case '3': s = 'M'; break;
+	case '4': s = 'ML'; break;
+	case '5': s = 'L'; break;
     }
     sendCommand('-roomsize=' + s);
 }
