@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+        <head>
+                <script src="./denon.js"></script>
+        </head>
+        <body>
+		<div>
+			<h2>Power</h2>
+	               <button id='button-poweron' class='control-websocket' onclick="powerOn()">Power On</button>
+	               <button id='button-poweroff' class='control-websocket' onclick="powerOff()">Power Off</button>
+		</div>
+		<div>
+			<h2>Volume</h2>
+			<input type="range" id="volumeControl" min="-80" max="20" value="-40" onchange="volumeChanged()"/></td>
+		</div>
+		<div>
+			<h2>Input</h2>
+	               <button id='button-inputCable' class='control-websocket' onclick="inputCable()">Cable</button>
+	               <button id='button-inputNetwork' class='control-websocket' onclick="inputNetwork()">Network</button>
+	               <button id='button-inputDVD' class='control-websocket' onclick="inputDVD()">DVD</button>
+	               <button id='button-inputVCR' class='control-websocket' onclick="inputVCR()">VCR</button>
+	               <button id='button-inputXBox' class='control-websocket' onclick="inputXBoxOne()">XBox One</button>
+	               <button id='button-inputXBox360' class='control-websocket' onclick="inputXBox360()">XBox 360</button>
+		</div
+		<div>
+		<h2>Surround Mode</h2>
+		    <table>
+			<tr>
+	               	    <td><button style="width:150px" id='button-surroundDirect' class='control-websocket' onclick="surroundDirect()">Direct</button></td>
+	               	    <td><button style="width:150px" id='button-surroundPureDirect' class='control-websocket' onclick="surroundPureDirect()">Pure Direct</button></td>
+			</tr>
+			<tr>
+	               	    <td><button style="width:150px" id='button-surroundStereo' class='control-websocket' onclick="surroundStereo()">Stereo</button></td>
+	               	    <td><button style="width:150px" id='button-surround5ch' class='control-websocket' onclick="surround5ChStereo()">5-Channel Stereo</button></td>
+			</tr>
+			<tr>
+	               	    <td><button style="width:150px" id='button-surroundDolbyDigital' class='control-websocket' onclick="surroundDolbyDigital()">Dolby Digital</button></td>
+	               	    <td><button style="width:150px" id='button-surroundDTS' class='control-websocket' onclick="surroundDTS()">DTS</button></td>
+			</tr>
+			<tr>
+	               	    <td><button style="width:150px" id='button-surroundArena' class='control-websocket' onclick="surroundArena()">Arena</button></td>
+	               	    <td><button style="width:150px" id='button-surroundJazzClub' class='control-websocket' onclick="surroundJazzClub()">Jazz Club</button></td>
+	                    <td><button style="width:150px" id='button-surroundStadium' class='control-websocket' onclick="surroundStadium()">Stadium</button></td>
+			</tr>
+			<tr>
+	               	    <td><button style="width:150px" id='button-surroundMatrix' class='control-websocket' onclick="surroundMatrix()">Matrix</button></td>
+	               	    <td><button style="width:150px" id='button-surroundMonoMovie' class='control-websocket' onclick="surroundMonoMovie()">Mono Movie</button></td>
+	               	    <td><button style="width:150px" id='button-surroundVideoGame' class='control-websocket' onclick="surroundVideoGame()">Video Game</button></td>
+	               	    <td><button style="width:150px" id='button-surroundVirtual' class='control-websocket' onclick="surroundVirtual()">Virtual</button></td>
+			</tr>
+			<tr>
+	               	    <td><button style="width:150px" id='button-surroundPl2Music' class='control-websocket' onclick="surroundPl2Music()">Pro-Logic II Music</button></td>
+	               	    <td><button style="width:150px" id='button-surroundPl2Movie' class='control-websocket' onclick="surroundPl2Movie()">Pro-Logic II Movie</button></td>
+			</tr>
+			<tr>
+	               	    <td><button style="width:150px" id='button-surroundNeo6Music' class='control-websocket' onclick="surroundNeo6Music()">DTS NEO:6 Music</button></td>
+	               	    <td><button style="width:150px" id='button-surroundNeo6Movie' class='control-websocket' onclick="surroundNeo6Movie()">DTS NEO:6 Movie</button></td>
+			</tr>
+		    </table>
+		</div>
+		<div>
+		<h2>Pro-Logic II Surround Parameters (only valid in <button id='button-surroundPl2Music2' class='control-websocket' onclick="surroundPl2Music()">Pro-Logic II Music</button> mode)</h2>
+			<table>
+			    <tr>
+				<td>Center Width: </td><td><input type="range" id="pl2Width" min="0" max="7" value="3" onchange="pl2WidthChanged()"/></td>
+			    </tr>
+			    <tr>
+				<td>Dimension: </td><td> <input type="range" id="pl2Dimension" min="0" max="7" value="3" onchange="pl2DimensionChanged()"/></td>
+			    </tr>
+			    <tr>
+				<td><input type="checkbox" id="pl2PanMode" name="pan1" value="pan2" onchange="pl2PanModeChanged()"><label for="panMode">Pan</label></td>
+			    </tr>
+			    <tr>
+		               <td colspan=2><button id='button-reset-surround1' class='control-websocket' onclick="surroundResetParams()">Default Surround Params</button></td>
+			    </tr>
+			</table
+		</div>
+		<div>
+		<h2>DTS NEO:6 Surround Parameters (only valid in <button id='button-surroundneo6Music2' class='control-websocket' onclick="surroundNeo6Music()">DTS NEO:6 Music</button> mode)</h2>
+			<table>
+			    <tr>
+				<td>Center Width: </td><td><input type="range" id="neo6Width" min="0" max="7" value="3" onchange="neo6WidthChanged()"/></td>
+			    </tr>
+			    <tr>
+		               <td colspan=2><button id='button-reset-surround2' class='control-websocket' onclick="surroundResetParams()">Default Surround Params</button></td>
+			    </tr>
+			</table
+		</div>  
+		<div>
+		<h2>MATRIX Surround Parameters (only valid in <button id='button-surroundMatrix2' class='control-websocket' onclick="surroundNeo6Music()">Matrix</button> surround mode)</h2>
+			<table>
+			    <tr>
+				<td>Delay: </td><td><input type="range" id="matrixDelay" min="0" max="300" value="30" onchange="matrixDelayChanged()"/></td>
+			    </tr>
+			    <tr>
+		               <td colspan=2><button id='button-reset-surround3' class='control-websocket' onclick="surroundResetParams()">Default Surround Params</button></td>
+			    </tr>
+			</table
+		</div>  
+		<div>
+		<h2>Room Surround Parameters (only valid in <button id='button-surroundArena2' class='control-websocket' onclick="surroundArena()">Arena</button> or <button id='button-surroundArena2' class='control-websocket' onclick="surroundJazzClub()">Jazz Club</button> surround modes)</h2>
+			<table>
+			    <tr>
+				<td>Room Size: </td><td><input type="range" id="roomSize" min="0" max="5" value="3" onchange="roomSizeChanged()"/></td>
+			    </tr>
+			    <tr>
+				<td>Effect Level: </td><td><input type="range" id="effectLevel" min="0" max="15" value="7" onchange="effectLevelChanged()"/></td>
+			    </tr>
+			    <tr>
+		               <td colspan=2><button id='button-reset-surround3' class='control-websocket' onclick="surroundResetParams()">Default Surround Params</button></td>
+			    </tr>
+			</table
+		</div>  
+	</body>
+</html>
