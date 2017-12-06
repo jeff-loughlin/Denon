@@ -325,6 +325,22 @@ func main() {
 		sendCommand(port, "PSRSZ " + *roomSize)
 	}
 
+
+	// There is some weirdness in the way the receiver handles selecting Dolby PL2 and DTS NEO:6 Cinema and Music modes.
+	// I haven't completely figured it out yet, but it seems there are no discrete commands to select Dolby PL2 or DTS
+	// NEO:6 mode.  Instead, you have to send the command 'MSSTANDARD', which toggles between Dolby PL2 and DTS NEO:6 
+	// mode (and presumably PL2x and PL2z if you have 7 speakers, which I don't).  To further complicate things, you
+	// have select Music/Cinema mode separately from the surround mode, and setting Music mode seems to automatically 
+	// switch the surround mode to DTS NEO:6.  Likewise, selecting Movie/Cinema mode seems to automatically switch the
+	// sourround mode to Dolby PL2, unless you're already in PL2 mode, in which case it switches it to DTS NEO:6.  Yeah.
+	//
+	// So to select Dolby PL2 Music mode, you have to first query the receiver to see what mode you're currently in, then
+	// send the command to toggle it to PL2 mode if you're not already there (several times if you have 7 speakers, as
+	// you'll need to toggle it past the PL2x and PL2z modes too).  Once you're in PL2 mode, you have to query the
+	// receiver again to see whether you're already in Music mode.  If you are, you're done, otherwise you have to 
+	// send the command to switch to Music mode, which also switches you back to DTS NEO:6 mode.  So then you have to
+	// toggle back to Dolby PL2 mode again.  Yeah.  This isn't documented, so I'm only guessing at what's really going
+	// on here, based on what I see happening.  Maybe there's an easier way...
 	if (*movie && *pl2) {
 		setMovieMode(port)
 		setPl2Mode(port)
