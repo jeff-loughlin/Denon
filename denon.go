@@ -15,7 +15,7 @@ const WAIT_TIME time.Duration = 500
 
 func sendCommand(port string, cmd string) {
 
-	fmt.Println("Sending command: " + cmd)
+//	fmt.Println("Sending command: " + cmd)
 
         c := &serial.Config{Name: port, Baud: 9600}
         s, err := serial.OpenPort(c)
@@ -48,26 +48,9 @@ func readResponse(port string) string {
 	    // stops execution
 	    log.Fatal(err)
 	}
-	fmt.Println("Response: " + string(data[:]))
+//	fmt.Println("Response: " + string(data[:]))
 	return string(data[:])
 }
-
-
-
-//        buf := make([]byte, 128)
-
-
-
-
-//       n, err := s.Read(buf)
-//        if err != nil {
-//               log.Fatal(err)
-//       }
-//        log.Printf("%q", buf[:n])
-
-//	fmt.Println("Response: " + string(buf[:n]))
-//	return string(buf[:n])
-//}
 
 
 
@@ -127,7 +110,7 @@ func main() {
 
 	if (*getResponse) {
 		response := readResponse(port)
-		fmt.Println("Response: " + response)
+		fmt.Println(response)
 		return
 	}
 
