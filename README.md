@@ -60,5 +60,19 @@ tell me it works, and as long as it doesn't break anything else, I'll accept it.
 The web interface is basic and ugly.  It does what I need it to, but a fancier (and mobile-friendly) interface would be nice.  
 That's on the to-do list.
 
+The serial protocol supports two-way communication, both in the form of a query/response system, and an event-based system.  
+The command line program supports the query/response model using the -response flag, which tells it to wait for a response 
+after sending a command.  You can use the -cmd and -response flags to send explicit commands to the reciever that the program 
+doesn't actively support, and read back responses from the receiver, for example:
+
+denon -cmd="CVC?" -response 
+
+will cause the receiver to respond with the current center channel volume.  The web interface uses this in a very basic way to
+set the volume and surround parameter sliders appropriately when the page loads.  Event-based communication causes the receiver 
+to send information over the serial port in response to changes at the receiver end (e.g. if someone turns the volume knob 
+on the receiver, it will send a series of "MVnn" events over the serial port reflecting the new volume setting).  The program 
+doesn't support event based communication, but it could probably be made to work in conjunction with another program that 
+opens the serial port in read-only mode and processes events.  I'll leave that project for another day...
+
 Other suggestions, bug reports, and pull requests are welcome.
 
