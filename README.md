@@ -38,11 +38,12 @@ where it is.  It's only 4 lines long, so you should have no trouble figuring out
 
 # Other Stuff
 I have renamed several of the inputs on my AVR receiver to reflect what's actually connected to them, and the web interface 
-has them named that way.  You'll probably want to change these to your taste.  I should make that configurable.  There's 
-lots of other room for improvement, and many additional commands available in the serial protocol that I haven't implemented, 
-either because I don't need them, or my receiver doesn't support them.  My receiver is an AVR-2310CI.  Newer and higher-end 
-receivers have some commands that mine doesn't have, but the protocol is otherwise identical on all Denon receivers that 
-support it.
+has them named that way.  You'll probably want to change these to match your setup.  I should make that configurable.
+
+There's lots of other room for improvement, and many additional commands available in the serial protocol that I haven't 
+implemented, either because I don't need them, or my receiver doesn't support them.  My receiver is an AVR-2310CI.  Newer 
+and higher-end receivers have some commands that mine doesn't have, but the protocol is otherwise identical on all Denon 
+receivers that support it.
 
 There are a few areas where the protocol documentation falls short (either that, or the receiver just implements some things badly 
 or weirdly).  This is true particularly around the area of Dolby Prologic II and DTS NEO:6 Music and Cinema modes.  There 
