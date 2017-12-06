@@ -27,5 +27,7 @@ Point your browser to the denon.html page to use the web interface.
 
 You'll probably need to change some things in denon.php to make the web interface work in your environment.  For me, the web server is on a different machine from the one connected to my Denon receiver, so my PHP needs to SSH over to that machine to execute the command line program.  If your web server runs on the same machine, change that to execute the program directly.  That should be all you need to do.
 
+I have renamed several of the inputs on my AVR receiver to reflect what's actually connected to them, and the web interface has them named that way (the command interface accepts both the default input names and my renamed ones.  I should make that configurable in the web interface (along with the command interface path, as noted above).  There's lots of other room for improvement, and many other commands available in the serial protocol that I haven't implemented either because I don't need them or don't know what they do.  My receiver is an AVR2310CI.  Newer and higher-end receivers have some commands that mine doesn't have, but the protocol is otherwise identical on all Denon receivers that support it.
 
-This program is very basic and there is a lot of room for improvement.  Suggestions and pull requests are welcome.
+
+Suggestions and pull requests are welcome.
