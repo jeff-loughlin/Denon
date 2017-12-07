@@ -184,6 +184,13 @@ function initPanCheckbox()
 function setVolumeSliderFromResponseText(responseText)
 {
     var rawVolume = responseText.substr(2);
+
+    // Receiver returns a three digit number for half steps (NN.n).  If we got a three digit number, just 
+    // divide it by 10 and drop the decimal.  We don't need to be that precise.
+    if (rawVolume >= 100)
+    {
+	rawVolume = rawVolume / 10;
+    }
     var adjustedVolume = rawVolume*1 - 80;
     document.getElementById('volumeControl').value = adjustedVolume;
 }

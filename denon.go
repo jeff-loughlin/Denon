@@ -30,9 +30,9 @@ func sendCommand(port string, cmd string) {
 	n++
 }
 
-func readResponse(port string) string {
+func readResponse(port string) [] string {
         c := &serial.Config{Name: port, Baud: 9600}
-	c.ReadTimeout = time.Millisecond * 5000
+	c.ReadTimeout = time.Millisecond * 200
         s, err := serial.OpenPort(c)
         if err != nil {
                 log.Fatal(err)
@@ -41,13 +41,14 @@ func readResponse(port string) string {
 	r := bufio.NewReader(s)
 
 	// reads until delimiter is reached
-	data, err := r.ReadBytes('\x0d')
-	if err != nil {
-	    // stops execution
-	    log.Fatal(err)
+	var returnArray [] string
+	for data, err := r.ReadBytes('\x0d'); err == nil; {
+//	    fmt.Println(string(data[:]))
+	    returnArray = append(returnArray, string(data[:]))
+	    data, err = r.ReadBytes('\x0d')
 	}
 //	fmt.Println("Response: " + string(data[:]))
-	return string(data[:])
+	return returnArray
 }
 
 
@@ -108,7 +109,9 @@ func main() {
 
 	if (*getResponse) {
 		response := readResponse(port)
-		fmt.Println(response)
+		for _,element := range response {
+		        fmt.Println(element)        
+		}
 		return
 	}
 
@@ -381,7 +384,7 @@ func setMovieMode(port string) {
 	sendCommand(port, "PSMODE: ?")
 	wait(WAIT_TIME)
 	var response = readResponse(port)
-	if (! strings.Contains(response, "DTS NEO:6 C") && ! strings.Contains(response, "DOLBY PL2 C") && ! strings.Contains(response, "PSMODE:CINEMA")) {
+	if (! strings.Contains(response[0], "DTS NEO:6 C") && ! strings.Contains(response[0], "DOLBY PL2 C") && ! strings.Contains(response[0], "PSMODE:CINEMA")) {
 		sendCommand(port, "PSMODE:CINEMA")
 		wait(WAIT_TIME)
 	}
@@ -393,7 +396,7 @@ func setMusicMode(port string) {
 	sendCommand(port, "PSMODE: ?")
 	wait(WAIT_TIME)
 	var response = readResponse(port)
-	if (! strings.Contains(response, "DTS NEO:6 M") && ! strings.Contains(response, "DOLBY PL2 M") && ! strings.Contains(response, "MODE:MUSIC")) {
+	if (! strings.Contains(response[0], "DTS NEO:6 M") && ! strings.Contains(response[0], "DOLBY PL2 M") && ! strings.Contains(response[0], "MODE:MUSIC")) {
 		sendCommand(port, "PSMODE:MUSIC")
 		wait(WAIT_TIME)
 	}
@@ -404,9 +407,9 @@ func setPl2Mode(port string) {
 	wait(WAIT_TIME)
 	sendCommand(port, "MS?")
 	wait(WAIT_TIME)
-	var response string = readResponse(port)
+	var response = readResponse(port)
 	wait(WAIT_TIME)
-	if (! strings.Contains(response, "PL2")) {
+	if (! strings.Contains(response[0], "PL2")) {
 		// If already PL2 mode, do nothing, otherwise toggle standard mode to switch to PL2
 		sendCommand(port, "MSSTANDARD")
 		wait(WAIT_TIME)
@@ -418,9 +421,9 @@ func setNeo6Mode(port string) {
 	wait(WAIT_TIME)
 	sendCommand(port, "MS?")
 	wait(WAIT_TIME)
-	var response string = readResponse(port)
+	var response = readResponse(port)
 	wait(WAIT_TIME)
-	if (! strings.Contains(response, "DTS NEO:6")) {
+	if (! strings.Contains(response[0], "DTS NEO:6")) {
 		// If already DTS NEO:6 mode, do nothing, otherwise toggle standard mode to switch to DTS NEO:6
 		sendCommand(port, "MSSTANDARD")
 		wait(WAIT_TIME)
