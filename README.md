@@ -32,8 +32,8 @@ where the web server can find them).
 Type denon -h to see a list of the command line arguments and what they do.
 Point your web browser to the denon.html page on your web server to use the web interface.  
 
-<b>Note: There is no security in the web interface.  I don't recommend putting this on a public-facing web server!</b>  If
-you do, you are likely find your receiver blasting Van Halen at full volume at 3:00 in the morning.  Don't blame me if that happens.
+<b>NOTE: There is no security in the web interface.  I don't recommend putting this on a public-facing web server!</b>  If
+you do, you are likely to find your receiver blasting Van Halen at full volume at 3:00 in the morning.  Don't blame me if that happens.
 
 If you installed the command line program to someplace other than /usr/local/bin, you'll need to change denon.php to reflect
 where it is.  It's only 4 lines long, so you should have no trouble figuring out what to change.
