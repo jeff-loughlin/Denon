@@ -185,12 +185,22 @@ function setVolumeSliderFromResponseText(responseText)
 {
     var rawVolume = responseText.substr(2);
 
+    // Receiver returns 99 to mean minimum volume.  I don't know why.  Change that to 0 so it becomes -80 after
+    // the adjusted volume calculation below
+    if (rawVolume == 99)
+    {
+	rawVolume = 0;
+    }
     // Receiver returns a three digit number for half steps (NN.n).  If we got a three digit number, just 
     // divide it by 10 and drop the decimal.  We don't need to be that precise.
     if (rawVolume >= 100)
     {
 	rawVolume = rawVolume / 10;
     }
+
+    // Receiver returns volume as a number from 0-98 (with 0 being the lowest and 98 being the highest, but for
+    // some reason sets it to 99 if the volume is at the minimum).  We want to convert it to -80 to +20 for the 
+    // slider range (which represents volume relative to 0db reference)
     var adjustedVolume = rawVolume*1 - 80;
     document.getElementById('volumeControl').value = adjustedVolume;
 }
